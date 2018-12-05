@@ -1,14 +1,37 @@
 import os
 import csv
 
+#open csv
 bank_file = os.path.join("", "Resources", "budget_data.csv")
+Change = []
+PrevRev = 0
+MyList = []
+#count the rows
 with open(bank_file, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     csv_header = next(csvreader)
     #print(f"CSV Header: {csv_header}")    
-    row_count = sum(1 for row in csvfile) 
+    RowCount = sum(1 for row in csvfile) 
+#P/L calculation
+with open(bank_file, newline='') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    csv_header = next(csvreader)
+    BankList = list(csvreader)
     #print(sum(int(x[1]) for x in csvreader))
-    
-print(row_count)
-
-
+    Profits = sum(int(row[1]) for row in BankList)
+#Avg change between months
+with open(bank_file, newline='') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    csv_header = next(csvreader)
+    BankList = list(csvreader)   
+    for row in BankList:
+        
+        Change =  int(row[1]) - PrevRev 
+        PrevRev = int(row[1])
+        MyList.append(Change)
+        summer = sum(MyList)
+print(MyList)
+print(summer)
+print(RowCount)
+print(str(Profits))
+print(str(Change))
